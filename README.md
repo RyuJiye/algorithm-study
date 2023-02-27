@@ -78,4 +78,4 @@ algorithmStudy
   - 예를 들어 `git push origin nx006`라 하면 nx006라는 브랜치로 푸시됨
   - **upstream**으로 푸시하지 않는다.
 8. 이후에 github.com으로 가서, 변경사항을 확인한 후 `Create Pull Request`를 눌러 `pull request`를 생성해준다
-9. merge conflict가 나는지 확인한 후에, develop 브랜치에 PR을 생성한다
+9. merge conflict가 나는지 확인한 후에, submit 브랜치에 PR을 생성한다
