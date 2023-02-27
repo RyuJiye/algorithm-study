@@ -43,6 +43,7 @@ algorithmStudy
 5. 제출자료
   - 문제 번호와 이름으로 된 파일에, `소스 파일`, `.md`, `이미지 등 기타 자료들`만 제출
   - 나머지 구성 파일들(`.exe`, `sln`, `CMakeList`, `makefile` 등등은 제출 X)
+6. 남의 코드 파일은 수정하지 않는다.
 
 ## Process
 ---
@@ -53,4 +54,28 @@ algorithmStudy
 
 ## PR 가이드
 ### Git 사용법
-OT서 설명하겠음
+1. 이 레포를 본인 깃허브 계정으로 fork 한다.
+2. fork 한 레포를 클론한다. `git clone [레포 클론 주소]` 사용
+3. `git remote -v`를 통해 먼저 연결된 원격 저장소를 확인한다.
+  - 보통 다음과 같이 되어 있을 것
+  ```
+  origin  https://github.com/nx006/algorithm-study.git (fetch)
+  origin  https://github.com/nx006/algorithm-study.git (push)
+  ```
+  - `git remote add upstream https://github.com/HongikB612/algorithm-study.git`를 입력하여 원격 저장소에 원본 저장소를 추가한다
+  - 참고로 origin과 upstream은 변수명임. 여기에 원격 레포지토리 주소를 변수로써 저장한다는 뜻임
+4. 매번 새로 들어올 때마다, `git fetch upstream`을 통해 원본 저장소와 내 포크한 레포를 동기화시켜주는 것이 좋다.
+  - `fetch`는 이후에 `merge` 과정을 거쳐야 하는데, fetch+merge를 합친 명령어로 `pull`이 있다.
+  - `git pull upstream main`해서 원본 저장소의 main 레포지토리를 pull한다.
+  - 참고로 이 pull 과정을 안 했을시 이후에 merge conflict 등 다양한 문제가 발생할 수 있어서, 꼭 pull을 해주는게 좋다
+5. 작업을 열심히 마무리하고선, `git add [파일명]`을 통해 변경사항이 들어있는 파일을 스테이징 아리아로 옮긴다.
+  - `git add .`를 하면 모든 변경된 파일이 스테이징 아리아에 올라간다.
+  - 대신 이때는 수동으로 필요없는 파일들은 지운다
+6. `git commit -m [커밋메시지]`로 스테이징된 파일들을 로컬 레포지토리로 옮긴다
+  - 커밋 메시지 컨벤션은 후술할 내용 참조
+7. `git push origin`으로 원격 레포지토리에 푸시한다.
+  - 참고로 이때 origin 뒤에 브랜치 이름을 붙인다면 해당 브랜치로 푸시된다
+  - 예를 들어 `git push origin nx006`라 하면 nx006라는 브랜치로 푸시됨
+  - **`upstream`**으로 푸시하지 않는다.
+8. 이후에 github.com으로 가서, 변경사항을 확인한 후 `Create Pull Request`를 눌러 `pull request`를 생성해준다
+9. merge conflict가 나는지 확인한 후에, develop 브랜치에 PR을 생성한다
