@@ -53,7 +53,7 @@ algorithmStudy
 4. 노션에도 동일하게 자료 생성
 
 ## PR 가이드
-### Git 사용법
+### PR 사용법
 1. 이 레포를 본인 깃허브 계정으로 fork 한다.
 2. fork 한 레포를 클론한다. `git clone [레포 클론 주소]` 사용
 3. `git remote -v`를 통해 먼저 연결된 원격 저장소를 확인한다.
@@ -68,9 +68,12 @@ algorithmStudy
   - `fetch`는 이후에 `merge` 과정을 거쳐야 하는데, fetch+merge를 합친 명령어로 `pull`이 있다.
   - `git pull upstream main`해서 원본 저장소의 main 레포지토리를 pull한다.
   - 참고로 이 pull 과정을 안 했을시 이후에 merge conflict 등 다양한 문제가 발생할 수 있어서, 꼭 pull을 해주는게 좋다
+  - `git pull upstream submit`도 해서 submit도 동기화시켜주자.
+  - 제가 최대한 main과 submit은 화요일/목요일마다 머지는 시켜놓을텐데, 가끔 까먹고 안 되어 있을 수 있거든요? 그래서 잘 확인해주시면 됩니다.
 5. 작업을 열심히 마무리하고선, `git add [파일명]`을 통해 변경사항이 들어있는 파일을 스테이징 아리아로 옮긴다.
   - `git add .`를 하면 모든 변경된 파일이 스테이징 아리아에 올라간다.
-  - 대신 이때는 수동으로 필요없는 파일들은 지운다
+  - 대신 이때는 수동으로 필요없는 파일들은 지운다.
+  - `git add 1003.md`를 하면 1003.md 파일만 스테이징 아리아에 올라간다.
 6. `git commit -m [커밋메시지]`로 스테이징된 파일들을 로컬 레포지토리로 옮긴다
   - 커밋 메시지 컨벤션은 후술할 내용 참조
 7. `git push origin`으로 원격 레포지토리에 푸시한다.
@@ -79,3 +82,65 @@ algorithmStudy
   - **upstream**으로 푸시하지 않는다.
 8. 이후에 github.com으로 가서, 변경사항을 확인한 후 `Create Pull Request`를 눌러 `pull request`를 생성해준다
 9. merge conflict가 나는지 확인한 후에, submit 브랜치에 PR을 생성한다
+10. 카카오톡/디스코드에 PR 올렸다고 말한다.
+
+### PR 이후
+매주 화요일마다 제(nx006)가 PR을 모두 체크한 뒤에, main으로 머지할 것입니다. 만약 수정사항이 있으면 PR을 거절하고, 다시 PR을 보내달라고 요청할 것입니다. 이때 목요일까지 다시 수정해서 올려주시면 됩니다.
+
+## 커밋 규칙
+커밋 메시지는 일관되게 작성해주세요. 여기서는 딱히 커밋 규칙에 대한 강제사항을 두지는 않겠으나, 다음 규칙을 적용하면 보기 편합니다.
+
+1. 단위 기능 별로 커밋한다.
+  - 너무 많은 커밋을 남기는 것은 좋지 않으나, 적당히 기능/수정 사항 별로 쪼개서 커밋을 남기는 게 좋다.
+2. 커밋 메시지는 일관되게 영어로 작성한다.
+  - 커밋 메시지 규칙은 하단을 참고해주세요.
+3. 제목과 본문을 빈 행으로 구분한다
+4. 제목을 50글자 내로 제한
+5. 제목 첫 글자는 대문자로 작성
+6. 제목 끝에 마침표 넣지 않기
+7. 제목은 명령문으로 사용하며 과거형을 사용하지 않는다
+8. 본문의 각 행은 72글자 내로 제한
+9. 어떻게 보다는 무엇과 왜를 설명한다
+
+근데 3번부터는 사실 저도 안 지켜서, 너무 빡빡하게는 안 지켜도 됨. 오히려 너무 엄격한 커밋 양식은 그 효율성을 떨어뜨린다고 생각해서, 개인적으로는 커밋 규칙을 엄격하게 강요하는 걸 별로 안 좋아하긴 합니다. 그냥 본인이 생갔했을 때 일관되게 하시면 됩니다.
+
+### 커밋 유형 양식
+- Feat : 새로운 기능의 추가
+- Fix: 버그 수정
+- Docs: 문서 수정
+- Style: 스타일 관련 기능(코드 포맷팅, 세미콜론 누락, 코드 자체의 변경이 없는 경우)
+- Refactor: 코드 리펙토링
+- Test: 테스트 코트, 리펙토링 테스트 코드 추가
+- Chore: 빌드 업무 수정, 패키지 매니저 수정(ex .gitignore 수정 같은 경우)
+
+예시
+```
+Docs: Update Readme
+```
+```
+Feat: Add Fibonacci function
+```
+```text
+Fix: Fibonacci function to working with long long type
+
+Now fibonacci function uses long long type, and if overflows happens function throws error
+```
+```
+Fix: Anagram_hash function returns invalid hash error
+
+Now anagram_hash function returns valid hash, which is ordered by lexicographical order
+```
+```
+Style: Apply clang-format to main.cpp, use llvm format
+```
+```
+Refactor: Rename the cnt variable to testCount
+
+Rename the variable with more descriptive name
+```
+```
+Refactor: remove unused import
+```
+
+참고로 커밋 메시지 규칙같은 건 팀마다 다릅니다. 어디서는 `DOCS Update readme` 이런 식으로 쓰기도 하고, `:` 이거를 붙이기도 하고, 안 붙이기도 합니다.
+알골 스터디에서는 거기까지 제한을 두지 않되, 본인에게 맞추어서 일관되게 작성해주시면 됩니다.
