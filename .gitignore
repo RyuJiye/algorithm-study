@@ -1,0 +1,20 @@
+# visual studio executable file
+*.exe
+*.sln
+
+# vscode files
+.vscode/
+
+# node modules
+node_modules/
+
+# build files
+build/
+
+# logs
+logs/
+*.log
+
+# misc
+.DS_Store
+.env
