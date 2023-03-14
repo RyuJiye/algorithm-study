@@ -16,8 +16,6 @@ constexpr int MAXLEN = 80;
 constexpr int ERROR = -1;
 
 struct Expression {
-	/// @brief Contructor
-	/// @param s 
 	explicit Expression(const std::string& s) : str(s), pos(0)
 	{
 		len = str.length();
@@ -206,12 +204,6 @@ int isp(const Token& t) // in-stack priority
 }
 void Postfix(Expression e)
 {
-	// infix expression e를 postfix form으로 바꾸어 출력
-	// e에 토큰이 없으면 NextToken은 ‘#’ 토큰을 반환한다.
-	// 스택의 밑에도 ‘#’를 넣고 시작한다.
-	// HINT : STL stack이용하고, 교재의 마지막 for문을 아래와 같이 바꾼다
-	// while (stack.top()!='#') { cout << stack.top(); stack.pop(); }
-	// stack.pop()
 	stack<Token> Stack_Expression; // 수식 e를 담을 스택 생성
 	Stack_Expression.emplace('#');
 	for (Token x = NextToken(e); x != '#'; x = NextToken(e)) {
