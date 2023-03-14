@@ -18,7 +18,7 @@ constexpr int ERROR = -1;
 struct Expression {
 	/// @brief Contructor
 	/// @param s 
-	explicit Expression(std::string s) : str(s), pos(0)
+	explicit Expression(const std::string& s) : str(s), pos(0)
 	{
 		len = str.length();
 	}
@@ -37,7 +37,7 @@ struct Token {
 	int type; // ascii code for 1-char op; predefined for other tokens
 	std::string str; // token value
 	int len; // length of str
-	int ival; // used to store an integer for type NUM; init to 0 for ID
+	int ival = 0; // used to store an integer for type NUM; init to 0 for ID
 };
 using namespace std;
 ostream& operator<<(ostream&, Token t);
@@ -47,16 +47,17 @@ enum OperatorPriority {LEFTBRACKET_icp, UMINUS_FACTORIAL, MULTI_DIVIDE, PLUS_MIN
 bool Token::operator==(char b) { return len == 1 && str[0] == b; }
 bool Token::operator!=(char b) { return len != 1 || str[0] != b; }
 Token::Token() {}
-Token::Token(char c) : len(1), type(c)
+Token::Token(const char c) : type(c), len(1)
 {
 	str.append(1, c);
 } // default type = c itself
-Token::Token(char c, char c2, int ty) : len(2), type(ty)
+Token::Token(const char c, const char c2, const int ty) : type(ty), len(2)
 {
 	str.append(1, c);
     str.append(1, c2);
 }
-Token::Token(const std::string& arr, int l, int ty = ID) : len(l), type(ty) {
+Token::Token(const std::string& arr, int l, int ty = ID) : type(ty) , len(l)
+{
 	for (int i = 0; i < len; i++) {
         str.append(1, arr[i]);
     }
@@ -78,14 +79,14 @@ ostream& operator<<(ostream& os, Token t) {
 bool GetID(Expression& e, Token& tok) {
 	char arr[MAXLEN]; int idlen = 0;
 	char c = e.str[e.pos];
-	if (!(c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')) 
+	if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))) 
 		return false;	// c가 알파벳이 아니면 false
 	arr[idlen++] = c;	// arr[0]에다가 c 저장
 	e.pos++;			// c 다음부터
 	// c가 알파벳이거나 숫자면 arr에 저장, 연산자면 나가기
-	while ((c = e.str[e.pos]) >= 'a' && c <= 'z'
-		|| c >= 'A' && c <= 'Z'
-		|| c >= '0' && c <= '9') {
+	while (((c = e.str[e.pos]) >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z')
+		|| (c >= '0' && c <= '9')) {
 		arr[idlen++] = c; e.pos++;
 	}
 	arr[idlen] = '\0'; // 마지막은 개행 문자로
@@ -163,7 +164,7 @@ Token NextToken(Expression& e, bool INFIX = true) {
 	}
 	throw "Illegal Character Found";
 }
-int icp(Token& t) { // in-coming priority
+int icp(const Token& t) { // in-coming priority
 	int ty = t.type;
 	// 이 부분 작성
 	// ty가 '('면 0,
@@ -187,7 +188,7 @@ int icp(Token& t) { // in-coming priority
 	else if (ty == '#') return SHARP;
 	else return ERROR;
 }
-int isp(Token& t) // in-stack priority
+int isp(const Token& t) // in-stack priority
 {
 	int ty = t.type; //stack 에서의 우선순위 결정
 	// stack 안에서는 여는 개괄호 (의 우선순위가 달라지는데, icp에서는 0이었다면 isp에서는 가장 낮은 값인 9를 리턴한다.
